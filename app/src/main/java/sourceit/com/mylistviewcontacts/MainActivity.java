@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import sourceit.com.mylistviewcontacts.model.MyContact;
@@ -19,22 +20,22 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.Contact
 
     ListView listView;
     MyAdapter adapter;
-    MyContact[] contactsArray;
+    List<MyContact> contactsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        contactsArray = generateContacts();
+        contactsList = generateContacts();
 
         listView = (ListView) findViewById(R.id.list_view);
-        adapter = new MyAdapter(this, contactsArray);
+        adapter = new MyAdapter(this, contactsList, this);
         listView.setAdapter(adapter);
     }
 
 
-    public MyContact[] generateContacts() {
+    public List<MyContact> generateContacts() {
         MyContact[] contactsArray = new MyContact[16];
         String name;
         String email;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.Contact
         String phone;
         @ColorInt
         int color;
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 16; i++) {
             name = "name" + i;
             email = "email" + i;
             address = "address" + i;
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.Contact
             color = Color.parseColor("#0000" + Integer.toHexString(i) + "" + Integer.toHexString(i));
             contactsArray[i] = new MyContact(name, email, address, phone, color);
         }
-        return contactsArray;
+        return Arrays.asList(contactsArray);
     }
 
     @Override
